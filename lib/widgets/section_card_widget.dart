@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SectionCard extends StatelessWidget {
-  const SectionCard({
+class SectionCardWidget extends StatelessWidget {
+  const SectionCardWidget({
     super.key,
     this.child,
     this.backgroundImageURL,

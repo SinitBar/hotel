@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/section_card.dart';
+import 'section_card_widget.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 class PictureCarousel extends StatefulWidget {
@@ -47,7 +47,7 @@ class _PictureCarouselState extends State<PictureCarousel>
       },
       controller: _pageController,
       itemBuilder: (context, index) {
-        return SectionCard(
+        return SectionCardWidget(
           //width: 343,
           //height: 257,
           backgroundImageURL:

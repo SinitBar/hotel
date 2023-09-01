@@ -10,7 +10,7 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @GET('/35e0d18e-2521-4f1b-a575-f0fe366f66e3')
-  Future<List<HotelData>> getData();
+  Future<HotelData> getData();
 }
 
 @JsonSerializable()
@@ -57,29 +57,25 @@ class HotelData {
 }
 
 class DataProvider {
-  Future<List<HotelData>> getHotelData() async {
-    List<HotelData> data = [];
+  Future<HotelData> getHotelData() async {
+    HotelData data = HotelData();
     try {
-      //final dio = Dio(); // Provide a dio instance
-
-      final dio = Dio(BaseOptions(
-        baseUrl: 'https://run.mocky.io/v3/35e0d18e-2521-4f1b-a575-f0fe366f66e3',
-        connectTimeout: Duration(milliseconds: 50000),
-        receiveTimeout: Duration(milliseconds: 50000),
-        contentType: 'application/json', // Added contentType here
-        //headers: headers as Map<String, dynamic>?,
-      ));
+      final dio = Dio(
+        BaseOptions(
+          // baseUrl:
+          //     'https://run.mocky.io/v3/35e0d18e-2521-4f1b-a575-f0fe366f66e3',
+          connectTimeout: Duration(milliseconds: 50000),
+          receiveTimeout: Duration(milliseconds: 50000),
+          contentType: 'application/json',
+        ),
+      );
       print(dio.options.baseUrl);
-      //dio.options.headers['content-Type'] = 'application/json';
       final client = RestClient(dio);
       data = await client.getData();
-      for (var it in data) {
-        print(it);
-      }
+      print(data);
     } catch (e) {
       print('EXCEPTION!!! $e');
     }
-    ;
     return data;
   }
 }
