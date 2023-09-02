@@ -8,7 +8,7 @@ part of 'data_provider.dart';
 
 AboutTheHotel _$AboutTheHotelFromJson(Map<String, dynamic> json) =>
     AboutTheHotel(
-      description: json['description'] as String?,
+      description: json['description'] as String? ?? 'Загрузка...',
       peculiarities: (json['peculiarities'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -22,17 +22,17 @@ Map<String, dynamic> _$AboutTheHotelToJson(AboutTheHotel instance) =>
 
 HotelData _$HotelDataFromJson(Map<String, dynamic> json) => HotelData(
       id: json['id'] as int?,
-      name: json['name'] as String?,
-      adress: json['adress'] as String?,
-      minimal_price: json['minimal_price'] as int?,
-      price_for_it: json['price_for_it'] as String?,
-      rating: json['rating'] as int?,
-      rating_name: json['rating_name'] as String?,
+      name: json['name'] as String? ?? 'Загрузка...',
+      adress: json['adress'] as String? ?? 'Загрузка...',
+      minimal_price: json['minimal_price'] as int? ?? 0,
+      price_for_it: json['price_for_it'] as String? ?? 'Загрузка...',
+      rating: json['rating'] as int? ?? 0,
+      rating_name: json['rating_name'] as String? ?? 'Загрузка...',
       image_urls: (json['image_urls'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       about_the_hotel: json['about_the_hotel'] == null
-          ? null
+          ? const AboutTheHotel()
           : AboutTheHotel.fromJson(
               json['about_the_hotel'] as Map<String, dynamic>),
     );

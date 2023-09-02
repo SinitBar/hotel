@@ -15,13 +15,14 @@ abstract class RestClient {
 
 @JsonSerializable()
 class AboutTheHotel {
-  String? description;
-  List<String>? peculiarities;
+  final String description;
+  final List<String>? peculiarities;
 
-  AboutTheHotel({
-    this.description,
+  const AboutTheHotel({
+    this.description = 'Загрузка...',
     this.peculiarities,
   });
+
   factory AboutTheHotel.fromJson(Map<String, dynamic> json) =>
       _$AboutTheHotelFromJson(json);
   Map<String, dynamic> toJson() => _$AboutTheHotelToJson(this);
@@ -30,25 +31,25 @@ class AboutTheHotel {
 @JsonSerializable()
 class HotelData {
   int? id;
-  String? name;
-  String? adress;
-  int? minimal_price;
-  String? price_for_it;
-  int? rating;
-  String? rating_name;
+  String name;
+  String adress;
+  int minimal_price;
+  String price_for_it;
+  int rating;
+  String rating_name;
   List<String>? image_urls;
-  AboutTheHotel? about_the_hotel;
+  AboutTheHotel about_the_hotel;
 
   HotelData({
     this.id,
-    this.name,
-    this.adress,
-    this.minimal_price,
-    this.price_for_it,
-    this.rating,
-    this.rating_name,
+    this.name = 'Загрузка...',
+    this.adress = 'Загрузка...',
+    this.minimal_price = 0,
+    this.price_for_it = 'Загрузка...',
+    this.rating = 0,
+    this.rating_name = 'Загрузка...',
     this.image_urls,
-    this.about_the_hotel,
+    this.about_the_hotel = const AboutTheHotel(),
   });
 
   factory HotelData.fromJson(Map<String, dynamic> json) =>

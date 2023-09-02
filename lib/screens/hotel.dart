@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hotel/actors/data_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel/constants.dart';
 import 'package:hotel/screens/room.dart';
+import '../blocs/hotel_data/hotel_data_bloc.dart';
 import '../widgets/card_item_button.dart';
 import '../widgets/divider_box_widget.dart';
 import '../widgets/peculiarities_wrap_widget.dart';
@@ -13,43 +14,32 @@ import '../widgets/stack_bottom_button.dart';
 
 class Hotel extends StatefulWidget {
   const Hotel({super.key});
+
   static const String id = 'hotel_screen';
+
   @override
   State<Hotel> createState() => _HotelState();
 }
 
 class _HotelState extends State<Hotel> {
-  late final HotelData hotelData;
-  late final DataProvider dataProvider;
-
-  @override
-  void initState() {
-    super.initState();
-    dataProvider = DataProvider();
-    getHotelData();
-  }
-
-  Future<void> getHotelData() async {
-    try {
-      var hData = await dataProvider.getHotelData();
-      setState(() {
-        hotelData = hData;
-        print(hotelData.about_the_hotel?.description);
-      });
-    } catch (e) {
-      print('Exception!!!!! $e');
-    }
-  }
-
+  final hotelDataBloc = HotelDataBloc()..add(HotelDataLoadEvent());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DesignedAppBar('Отель'),
+      appBar: DesignedAppBar(
+        titleLabel: 'Отель',
+        isHome: true,
+      ),
+      bottomNavigationBar: StackBottomButton(
+        label: 'К выбору номера',
+        navigateToId: Room.id,
+      ),
       backgroundColor: kBackgroundScreenColor,
       body: SafeArea(
-        child: Stack(
-          children: [
-            ListView(
+        child: BlocBuilder<HotelDataBloc, HotelDataState>(
+          bloc: hotelDataBloc,
+          builder: (context, state) {
+            return ListView(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -61,14 +51,15 @@ class _HotelState extends State<Hotel> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      //     PictureCarousel(
-                      //       imagesURLs: kImagesURLs,
-                      //     ),
-                      //CarouselWithIndicatorDemo(),
                       SizedBox(
                         height: 257,
                         width: 343,
-                        child: PictureCarousel(imagesURLs: kImagesURLs),
+                        child: PictureCarousel(
+                          imagesURLs: state.hotelData.image_urls ?? [],
+                          // (state is HotelDataLoadedState)
+                          //     ? (state.hotelData.image_urls ?? [])
+                          //     : [],
+                        ),
                       ),
                       SectionCardWidget(
                         color: Color(0x33FFC700),
@@ -79,12 +70,21 @@ class _HotelState extends State<Hotel> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         child: RatingWidget(
-                          rating: 5,
-                          ratingName: 'Превосходно',
+                          rating: state.hotelData.rating,
+                          // (state is HotelDataLoadedState)
+                          //     ? (state.hotelData.rating ?? 0)
+                          //     : 0,
+                          ratingName: state.hotelData.rating_name,
+                          // : (state is HotelDataLoadedState)
+                          //     ? (state.hotelData.rating_name ?? '')
+                          //     : 'Загрузка...',
                         ),
                       ),
                       Text(
-                        'Steigenbergen Makadi',
+                        state.hotelData.name,
+                        // (state is HotelDataLoadedState)
+                        //     ? (state.hotelData.name ?? '')
+                        //     : '',
                         style: kTextStyleMedium.copyWith(fontSize: 22),
                       ),
                       Padding(
@@ -105,7 +105,10 @@ class _HotelState extends State<Hotel> {
                               ),
                             ),
                             child: Text(
-                              'Madinat Makadi, Safaga Road, Makadi Bay, Египет',
+                              state.hotelData.adress,
+                              // (state is HotelDataLoadedState)
+                              //     ? (state.hotelData.adress ?? '')
+                              //     : '',
                               style: kTextStyleMedium.copyWith(
                                 fontSize: 14,
                                 color: const Color(0xFF0D72FF),
@@ -115,8 +118,14 @@ class _HotelState extends State<Hotel> {
                         ),
                       ),
                       PricingWidget(
-                        minimalPrice: '134 673',
-                        priceForIt: 'за тур с перелетом',
+                        minimalPrice: state.hotelData.minimal_price,
+                        // (state is HotelDataLoadedState)
+                        //     ? (state.hotelData.minimal_price ?? 0)
+                        //     : 0,
+                        priceForIt: state.hotelData.price_for_it,
+                        // (state is HotelDataLoadedState)
+                        //     ? (state.hotelData.price_for_it ?? '')
+                        //     : '',
                       ),
                     ],
                   ),
@@ -139,20 +148,34 @@ class _HotelState extends State<Hotel> {
                         ),
                       ),
                       PeculiaritiesWrapWidget(
-                        peculiarities: [
-                          '3-я линия',
-                          'платный WI-FI в фойе',
-                          '30 км до аэропорта',
-                          '1 км до пляжа',
-                        ],
+                        peculiarities:
+                            state.hotelData.about_the_hotel.peculiarities ?? [],
+                        // (state is HotelDataLoadedState)
+                        //     ? (state.hotelData.about_the_hotel.peculiarities ??
+                        //         [])
+                        //     : [],
+                        // [
+                        //   '3-я линия',
+                        //   'платный WI-FI в фойе',
+                        //   '30 км до аэропорта',
+                        //   '1 км до пляжа',
+                        // ],
                       ),
-                      Text(
-                        'Отель VIP-класса с собственными гольф полями. Высокий уровень сервиса. Рекомендуем для респектабельного отдыха. Отель принимает гостей до 18 лет!',
-                        style: kTextStyleRegular,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4.0),
+                        child: Text(
+                          state.hotelData.about_the_hotel.description,
+                          // (state is HotelDataLoadedState)
+                          //     ? (state.hotelData.about_the_hotel.description ??
+                          //         '')
+                          //     : '',
+                          //'Отель VIP-класса с собственными гольф полями. Высокий уровень сервиса. Рекомендуем для респектабельного отдыха. Отель принимает гостей до 18 лет!',
+                          style: kTextStyleRegular,
+                        ),
                       ),
-                      SectionCardWidget(
+                      const SectionCardWidget(
                         color: kLightGrayCardColor,
-                        padding: const EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(15.0),
                         //height: 180,
                         child: Column(
                           children: [
@@ -182,14 +205,9 @@ class _HotelState extends State<Hotel> {
                     ],
                   ),
                 ),
-                SizedBox(height: 88),
               ],
-            ),
-            StackBottomButton(
-              label: 'К выбору номера',
-              navigateToId: Room.id,
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -197,23 +215,32 @@ class _HotelState extends State<Hotel> {
 }
 
 class DesignedAppBar extends AppBar {
-  DesignedAppBar(
-    this.titleLabel, {
+  DesignedAppBar({
+    required this.titleLabel,
+    this.isHome = false,
     super.key,
   });
 
   final String titleLabel;
+  final bool isHome;
 
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      title: Center(
-        child: Text(
-          titleLabel,
-          style: kTextStyleMedium,
-          textAlign: TextAlign.center,
-        ),
+      centerTitle: true,
+      title: Text(
+        titleLabel,
+        style: kTextStyleMedium,
       ),
+      leading: isHome
+          ? null
+          : IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new_rounded,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
     );
   }
 }

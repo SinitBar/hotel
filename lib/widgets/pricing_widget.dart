@@ -9,7 +9,7 @@ class PricingWidget extends StatelessWidget {
     required this.priceForIt,
   });
 
-  final String minimalPrice;
+  final int minimalPrice;
   final String priceForIt;
 
   @override
