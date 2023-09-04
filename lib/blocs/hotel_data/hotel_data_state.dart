@@ -2,7 +2,8 @@ part of 'hotel_data_bloc.dart';
 
 @immutable
 abstract class HotelDataState {
-  HotelData get hotelData => HotelData();
+  HotelData get hotelData =>
+      HotelData(); // to provide access to hotelData in every state
 }
 
 class HotelDataInitial extends HotelDataState {}

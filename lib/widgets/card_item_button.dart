@@ -52,7 +52,7 @@ class CardItemButton extends StatelessWidget {
                       hintLabel,
                       style: kTextStyleMedium.copyWith(
                         fontSize: 14,
-                        color: kLightGrayCardTextColor,
+                        color: kLightGrayTextColor,
                       ),
                     ),
                   ],

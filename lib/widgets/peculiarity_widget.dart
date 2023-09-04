@@ -14,11 +14,11 @@ class PeculiarityWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SectionCardWidget(
       borderRadius: 5,
-      color: kLightGrayCardColor,
+      color: kLightGrayColor,
       child: Text(
         peculiarity,
-        style: kTextStyleMedium.copyWith(
-            fontSize: 16, color: kLightGrayCardTextColor),
+        style:
+            kTextStyleMedium.copyWith(fontSize: 16, color: kLightGrayTextColor),
       ),
     );
   }

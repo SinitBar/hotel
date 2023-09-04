@@ -22,13 +22,21 @@ class Hotel extends StatefulWidget {
 }
 
 class _HotelState extends State<Hotel> {
-  final hotelDataBloc = HotelDataBloc()..add(HotelDataLoadEvent());
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DesignedAppBar(
-        titleLabel: 'Отель',
-        isHome: true,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          'Отель',
+          style: kTextStyleMedium,
+        ),
       ),
       bottomNavigationBar: StackBottomButton(
         label: 'К выбору номера',
@@ -37,15 +45,11 @@ class _HotelState extends State<Hotel> {
       backgroundColor: kBackgroundScreenColor,
       body: SafeArea(
         child: BlocBuilder<HotelDataBloc, HotelDataState>(
-          bloc: hotelDataBloc,
           builder: (context, state) {
             return ListView(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SectionCardWidget(
-                  padding: EdgeInsets.all(15.0),
-                  // width: double.infinity,
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,38 +57,25 @@ class _HotelState extends State<Hotel> {
                     children: [
                       SizedBox(
                         height: 257,
-                        width: 343,
                         child: PictureCarousel(
                           imagesURLs: state.hotelData.image_urls ?? [],
-                          // (state is HotelDataLoadedState)
-                          //     ? (state.hotelData.image_urls ?? [])
-                          //     : [],
                         ),
                       ),
                       SectionCardWidget(
-                        color: Color(0x33FFC700),
+                        color: const Color(0x33FFC700),
                         height: 29,
                         width: 149,
                         borderRadius: 5,
-                        margin: EdgeInsets.only(bottom: 4, top: 15),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        margin: const EdgeInsets.only(bottom: 4, top: 15),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
                         child: RatingWidget(
                           rating: state.hotelData.rating,
-                          // (state is HotelDataLoadedState)
-                          //     ? (state.hotelData.rating ?? 0)
-                          //     : 0,
                           ratingName: state.hotelData.rating_name,
-                          // : (state is HotelDataLoadedState)
-                          //     ? (state.hotelData.rating_name ?? '')
-                          //     : 'Загрузка...',
                         ),
                       ),
                       Text(
                         state.hotelData.name,
-                        // (state is HotelDataLoadedState)
-                        //     ? (state.hotelData.name ?? '')
-                        //     : '',
                         style: kTextStyleMedium.copyWith(fontSize: 22),
                       ),
                       Padding(
@@ -106,9 +97,6 @@ class _HotelState extends State<Hotel> {
                             ),
                             child: Text(
                               state.hotelData.adress,
-                              // (state is HotelDataLoadedState)
-                              //     ? (state.hotelData.adress ?? '')
-                              //     : '',
                               style: kTextStyleMedium.copyWith(
                                 fontSize: 14,
                                 color: const Color(0xFF0D72FF),
@@ -119,23 +107,16 @@ class _HotelState extends State<Hotel> {
                       ),
                       PricingWidget(
                         minimalPrice: state.hotelData.minimal_price,
-                        // (state is HotelDataLoadedState)
-                        //     ? (state.hotelData.minimal_price ?? 0)
-                        //     : 0,
                         priceForIt: state.hotelData.price_for_it,
-                        // (state is HotelDataLoadedState)
-                        //     ? (state.hotelData.price_for_it ?? '')
-                        //     : '',
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 SectionCardWidget(
-                  padding: EdgeInsets.all(16),
-                  height: 435,
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -150,33 +131,17 @@ class _HotelState extends State<Hotel> {
                       PeculiaritiesWrapWidget(
                         peculiarities:
                             state.hotelData.about_the_hotel.peculiarities ?? [],
-                        // (state is HotelDataLoadedState)
-                        //     ? (state.hotelData.about_the_hotel.peculiarities ??
-                        //         [])
-                        //     : [],
-                        // [
-                        //   '3-я линия',
-                        //   'платный WI-FI в фойе',
-                        //   '30 км до аэропорта',
-                        //   '1 км до пляжа',
-                        // ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           state.hotelData.about_the_hotel.description,
-                          // (state is HotelDataLoadedState)
-                          //     ? (state.hotelData.about_the_hotel.description ??
-                          //         '')
-                          //     : '',
-                          //'Отель VIP-класса с собственными гольф полями. Высокий уровень сервиса. Рекомендуем для респектабельного отдыха. Отель принимает гостей до 18 лет!',
                           style: kTextStyleRegular,
                         ),
                       ),
                       const SectionCardWidget(
-                        color: kLightGrayCardColor,
+                        color: kLightGrayColor,
                         padding: EdgeInsets.all(15.0),
-                        //height: 180,
                         child: Column(
                           children: [
                             CardItemButton(
@@ -210,37 +175,6 @@ class _HotelState extends State<Hotel> {
           },
         ),
       ),
-    );
-  }
-}
-
-class DesignedAppBar extends AppBar {
-  DesignedAppBar({
-    required this.titleLabel,
-    this.isHome = false,
-    super.key,
-  });
-
-  final String titleLabel;
-  final bool isHome;
-
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      centerTitle: true,
-      title: Text(
-        titleLabel,
-        style: kTextStyleMedium,
-      ),
-      leading: isHome
-          ? null
-          : IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
     );
   }
 }

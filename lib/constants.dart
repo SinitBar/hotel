@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 const kBackgroundScreenColor = Color(0xFFF6F6F9);
 
-const kLightGrayCardColor = Color(0xFFFBFBFC);
-const kLightGrayCardTextColor = Color(0xFF828796);
+const kLightGrayColor = Color(0xFFFBFBFC);
+const kLightGrayTextColor = Color(0xFF828796);
 
 const kTextStyleMedium = TextStyle(
   fontFamily: 'SF-Pro-Display',

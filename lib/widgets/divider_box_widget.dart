@@ -13,7 +13,7 @@ class DividerBoxWidget extends StatelessWidget {
       height: 10,
       child: Padding(
         padding: EdgeInsets.only(left: 36.0),
-        child: Divider(color: kLightGrayCardTextColor),
+        child: Divider(color: kLightGrayTextColor),
       ),
     );
   }

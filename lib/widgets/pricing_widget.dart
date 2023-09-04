@@ -28,7 +28,7 @@ class PricingWidget extends StatelessWidget {
             priceForIt,
             style: kTextStyleRegular.copyWith(
               fontSize: 16,
-              color: kLightGrayCardTextColor,
+              color: kLightGrayTextColor,
             ),
           ),
         ),

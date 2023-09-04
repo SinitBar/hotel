@@ -50,8 +50,8 @@ class _PictureCarouselState extends State<PictureCarousel>
         return SectionCardWidget(
           //width: 343,
           //height: 257,
-          backgroundImageURL:
-              widget.imagesURLs[index % widget.imagesURLs.length],
+          backgroundImageURL: widget.imagesURLs[index %
+              ((widget.imagesURLs.isNotEmpty) ? widget.imagesURLs.length : 1)],
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Row(
