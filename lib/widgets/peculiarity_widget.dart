@@ -15,10 +15,13 @@ class PeculiarityWidget extends StatelessWidget {
     return SectionCardWidget(
       borderRadius: 5,
       color: kLightGrayColor,
-      child: Text(
-        peculiarity,
-        style:
-            kTextStyleMedium.copyWith(fontSize: 16, color: kLightGrayTextColor),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text(
+          peculiarity,
+          style: kTextStyleMedium.copyWith(
+              fontSize: 16, color: kLightGrayTextColor),
+        ),
       ),
     );
   }
