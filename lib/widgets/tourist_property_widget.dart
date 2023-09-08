@@ -7,11 +7,13 @@ class TouristPropertyWidget extends StatefulWidget {
     required this.controller,
     required this.onChanged,
     required this.label,
+    required this.triedToPay,
   });
 
   final TextEditingController controller;
   final String label;
   final void Function(String) onChanged;
+  final bool triedToPay;
 
   @override
   State<TouristPropertyWidget> createState() => _TouristPropertyWidgetState();
@@ -22,7 +24,9 @@ class _TouristPropertyWidgetState extends State<TouristPropertyWidget> {
 
   @override
   void initState() {
-    backgroundColor = kBackgroundScreenColor;
+    backgroundColor = (widget.controller.text.isEmpty && widget.triedToPay)
+        ? kErrorTextFieldFillColor
+        : kBackgroundScreenColor;
     super.initState();
   }
 

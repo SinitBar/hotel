@@ -10,11 +10,13 @@ class VisibilitySwitchPairWidget extends StatefulWidget {
     required this.label,
     required this.bloc,
     required this.index,
+    required this.triedToPay,
   });
 
   final String label;
   final TouristsInfoBloc bloc;
   final int index;
+  final bool triedToPay;
 
   @override
   State<VisibilitySwitchPairWidget> createState() =>
@@ -127,6 +129,7 @@ class _VisibilitySwitchPairWidgetState
                 ],
               ),
               TouristPropertyWidget(
+                triedToPay: widget.triedToPay,
                 label: 'Имя',
                 controller: _nameController,
                 onChanged: (value) => widget.bloc.add(
@@ -138,6 +141,7 @@ class _VisibilitySwitchPairWidgetState
                 ),
               ),
               TouristPropertyWidget(
+                triedToPay: widget.triedToPay,
                 label: 'Фамилия',
                 controller: _surnameController,
                 onChanged: (value) => widget.bloc.add(
@@ -149,6 +153,7 @@ class _VisibilitySwitchPairWidgetState
                 ),
               ),
               TouristPropertyWidget(
+                triedToPay: widget.triedToPay,
                 label: 'Дата Рождения',
                 controller: _dateOfBirthController,
                 onChanged: (value) => widget.bloc.add(
@@ -160,6 +165,7 @@ class _VisibilitySwitchPairWidgetState
                 ),
               ),
               TouristPropertyWidget(
+                triedToPay: widget.triedToPay,
                 label: 'Гражданство',
                 controller: _nationalityController,
                 onChanged: (value) => widget.bloc.add(
@@ -171,6 +177,7 @@ class _VisibilitySwitchPairWidgetState
                 ),
               ),
               TouristPropertyWidget(
+                triedToPay: widget.triedToPay,
                 label: 'Номер загранпаспорта',
                 controller: _foreignPassportNumberController,
                 onChanged: (value) => widget.bloc.add(
@@ -182,6 +189,7 @@ class _VisibilitySwitchPairWidgetState
                 ),
               ),
               TouristPropertyWidget(
+                triedToPay: widget.triedToPay,
                 label: 'Срок действия загранпаспорта',
                 controller: _expiryDateOfThePassportController,
                 onChanged: (value) => widget.bloc.add(

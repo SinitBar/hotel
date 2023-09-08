@@ -8,9 +8,11 @@ class MaskedTextFieldForPhoneNumber extends StatefulWidget {
   const MaskedTextFieldForPhoneNumber({
     super.key,
     required this.payerDataBloc,
+    required this.triedToPay,
   });
 
   final PayerDataBloc payerDataBloc;
+  final bool triedToPay;
 
   @override
   State<MaskedTextFieldForPhoneNumber> createState() =>
@@ -25,8 +27,11 @@ class _MaskedTextFieldForPhoneNumberState
   @override
   void initState() {
     _controller = TextEditingController();
-    backgroundColor = kBackgroundScreenColor;
     _controller.text = widget.payerDataBloc.state.phone;
+    backgroundColor = (widget.triedToPay &&
+            (_controller.text.contains('*') || _controller.text.isEmpty))
+        ? kErrorTextFieldFillColor
+        : kBackgroundScreenColor;
     super.initState();
   }
 
@@ -59,7 +64,8 @@ class _MaskedTextFieldForPhoneNumberState
             },
             onTapOutside: (_) {
               setState(() {
-                backgroundColor = (_controller.text.contains('*'))
+                backgroundColor = (_controller.text.contains('*') ||
+                        (_controller.text.isEmpty && widget.triedToPay))
                     ? kErrorTextFieldFillColor
                     : kBackgroundScreenColor;
               });
@@ -69,12 +75,11 @@ class _MaskedTextFieldForPhoneNumberState
                   emailAddress: state.email,
                 ),
               );
-              print(
-                  'changed PHONE to ${_controller.text} and email to ${state.email}');
             },
             onSubmitted: (_) {
               setState(() {
-                backgroundColor = (_controller.text.contains('*'))
+                backgroundColor = (_controller.text.contains('*') ||
+                        (_controller.text.isEmpty && widget.triedToPay))
                     ? kErrorTextFieldFillColor
                     : kBackgroundScreenColor;
               });
@@ -84,8 +89,6 @@ class _MaskedTextFieldForPhoneNumberState
                   emailAddress: state.email,
                 ),
               );
-              print(
-                  'changed PHONE to ${_controller.text} and email to ${state.email}');
             },
             keyboardType: TextInputType.phone,
             style: kTextStyleRegular.copyWith(fontSize: 16),
@@ -114,8 +117,6 @@ class _MaskedTextFieldForPhoneNumberState
                   emailAddress: state.email,
                 ),
               );
-              print(
-                  'changed PHONE to ${_controller.text} and email to ${state.email}');
             },
           );
         },

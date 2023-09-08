@@ -10,11 +10,13 @@ class EmailTextField extends StatefulWidget {
     required this.label,
     required this.validator,
     required this.payerDataBloc,
+    required this.triedToPay,
   });
 
   final String label;
   final bool Function(String) validator;
   final PayerDataBloc payerDataBloc;
+  final bool triedToPay;
 
   @override
   State<EmailTextField> createState() => _EmailTextFieldState();
@@ -27,10 +29,13 @@ class _EmailTextFieldState extends State<EmailTextField> {
 
   @override
   void initState() {
-    backgroundColor = kBackgroundScreenColor;
     emailController = TextEditingController();
     emailController.text = widget.payerDataBloc.state.email;
     wasTapped = false;
+    backgroundColor =
+        (!EmailValidator.validate(emailController.text) && widget.triedToPay)
+            ? kErrorTextFieldFillColor
+            : kBackgroundScreenColor;
     super.initState();
   }
 
@@ -81,8 +86,6 @@ class _EmailTextFieldState extends State<EmailTextField> {
                   emailAddress: emailController.text,
                 ),
               );
-              print(
-                  'changed phone number to ${state.phone} and EMAIL to ${emailController.text}');
             },
             onTapOutside: (pointerDownEvent) {
               if (wasTapped) {
@@ -98,8 +101,6 @@ class _EmailTextFieldState extends State<EmailTextField> {
                     emailAddress: emailController.text,
                   ),
                 );
-                print(
-                    'changed phone number to ${state.phone} and EMAIL to ${emailController.text}');
               }
             },
           );

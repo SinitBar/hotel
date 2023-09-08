@@ -9,14 +9,17 @@ class TouristsSectionWidget extends StatelessWidget {
   const TouristsSectionWidget({
     super.key,
     required this.touristsInfoBloc,
+    required this.triedToPay,
   });
 
   final TouristsInfoBloc touristsInfoBloc;
+  final bool triedToPay;
 
   List<VisibilitySwitchPairWidget> generateWidgetsList() {
     List<VisibilitySwitchPairWidget> tourists =
-    List.generate(touristsInfoBloc.state.touristList.length, (index) {
+        List.generate(touristsInfoBloc.state.touristList.length, (index) {
       return VisibilitySwitchPairWidget(
+        triedToPay: triedToPay,
         bloc: touristsInfoBloc,
         label: Tourist.convertIndexToWord(index),
         index: index,
@@ -60,7 +63,7 @@ class TouristsSectionWidget extends StatelessWidget {
                     ),
                     style: kIconButtonStyle.copyWith(
                         backgroundColor:
-                        const MaterialStatePropertyAll(kBlueIconColor)),
+                            const MaterialStatePropertyAll(kBlueIconColor)),
                   ),
                 ],
               ),

@@ -13,7 +13,6 @@ class RoomsDataBloc extends Bloc<RoomsDataEvent, RoomsDataState> {
   _onLoadEvent(
       RoomsDataLoadEvent loadEvent, Emitter<RoomsDataState> emit) async {
     emit(RoomsDataLoadingState());
-    print('in on load event');
     final roomsData = await DataProvider().getRoomsData();
     emit(RoomsDataLoadedState(roomsData));
   }
