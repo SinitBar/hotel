@@ -44,84 +44,103 @@ class Room extends StatelessWidget {
           child: BlocBuilder<RoomsDataBloc, RoomsDataState>(
             builder: (context, state) {
               return ListView(
-                  children:
-                      List.generate(state.roomsData.rooms.length, (index) {
-                final room = state.roomsData.rooms[index];
-                return Column(
-                  //crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SectionCardWidget(
-                      padding: EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 257,
-                            child: PictureCarousel(
-                              imagesURLs: room.image_urls ?? [],
+                  children: List.generate(
+                state.roomsData.rooms.length,
+                (index) {
+                  final room = state.roomsData.rooms[index];
+                  return Column(
+                    children: [
+                      SectionCardWidget(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 257,
+                              child: (state is RoomsDataLoadedState)
+                                  ? PictureCarousel(
+                                      imagesURLs: room.image_urls ?? [],
+                                    )
+                                  : const SizedBox(
+                                      width: double.infinity,
+                                      child: Center(
+                                        child: SectionCardWidget(
+                                          height: 200,
+                                          width: 200,
+                                          child: CircularProgressIndicator(
+                                            color: kBlueIconColor,
+                                            backgroundColor:
+                                                kBackgroundScreenColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                             ),
-                          ),
-                          Text(
-                            room.name,
-                            style: kTextStyleMedium.copyWith(fontSize: 22),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: PeculiaritiesWrapWidget(
-                              peculiarities: room.peculiarities ?? [],
+                            Text(
+                              room.name,
+                              style: kTextStyleMedium.copyWith(fontSize: 22),
                             ),
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.resolveWith(
-                                  (states) => const Size.fromWidth(205)),
-                              // maximumSize: MaterialStateProperty.resolveWith(
-                              //     (states) => const Size.fromWidth(192)),
-                              shape: MaterialStateProperty.resolveWith(
-                                (states) => RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: PeculiaritiesWrapWidget(
+                                peculiarities: room.peculiarities ?? [],
                               ),
-                              backgroundColor: MaterialStateColor.resolveWith(
-                                  (states) => const Color(0x1A0D72FF)),
                             ),
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Подробнее о номере',
-                                  textAlign: TextAlign.center,
-                                  style: kTextStyleMedium.copyWith(
-                                    color: const Color(0xFF0D72FF),
-                                    fontSize: 16,
+                            TextButton(
+                              style: ButtonStyle(
+                                padding: MaterialStateProperty.resolveWith(
+                                    (states) =>
+                                        const EdgeInsets.only(left: 8.0)),
+                                shape: MaterialStateProperty.resolveWith(
+                                  (states) => RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                const Icon(
-                                  Icons.navigate_next_outlined,
-                                  color: Color(0xFF0D72FF),
-                                ),
-                              ],
+                                backgroundColor: MaterialStateColor.resolveWith(
+                                    (states) => kLightBlueBackgroundColor),
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Подробнее о номере',
+                                    textAlign: TextAlign.start,
+                                    style: kTextStyleMedium.copyWith(
+                                      color: const Color(0xFF0D72FF),
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.navigate_next_outlined,
+                                    color: kBlueIconColor,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          PricingWidget(
-                            minimalPrice: room.price,
-                            priceForIt: room.price_per,
-                          ),
-                          StackBottomButton(
-                            label: 'Выбрать номер',
-                            navigateToId: Booking.id,
-                          ),
-                        ],
+                            PricingWidget(
+                              minimalPrice: room.price,
+                              priceForIt: room.price_per,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: StackBottomButton(
+                                label: 'Выбрать номер',
+                                navigateToId: Booking.id,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                );
-              })
-                  //SectionCardWidget(child: state.roomsData.rooms),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                    ],
                   );
+                },
+              ));
             },
           ),
         ),

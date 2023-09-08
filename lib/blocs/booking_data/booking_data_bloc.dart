@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../data_provider/data_provider.dart';
 
 part 'booking_data_event.dart';
@@ -16,7 +13,6 @@ class BookingDataBloc extends Bloc<BookingDataEvent, BookingDataState> {
   _onLoadEvent(
       BookingDataLoadEvent loadEvent, Emitter<BookingDataState> emit) async {
     emit(BookingDataLoadingState());
-    print('in on load event');
     final bookingData = await DataProvider().getBookingData();
     emit(BookingDataLoadedState(bookingData));
   }

@@ -22,10 +22,6 @@ class Hotel extends StatefulWidget {
 }
 
 class _HotelState extends State<Hotel> {
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold();
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +34,13 @@ class _HotelState extends State<Hotel> {
           style: kTextStyleMedium,
         ),
       ),
-      bottomNavigationBar: StackBottomButton(
-        label: 'К выбору номера',
-        navigateToId: Room.id,
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(15.0),
+        child: const StackBottomButton(
+          label: 'К выбору номера',
+          navigateToId: Room.id,
+        ),
       ),
       backgroundColor: kBackgroundScreenColor,
       body: SafeArea(
@@ -57,9 +57,23 @@ class _HotelState extends State<Hotel> {
                     children: [
                       SizedBox(
                         height: 257,
-                        child: PictureCarousel(
-                          imagesURLs: state.hotelData.image_urls ?? [],
-                        ),
+                        child: (state is HotelDataLoadedState)
+                            ? PictureCarousel(
+                                imagesURLs: state.hotelData.image_urls ?? [],
+                              )
+                            : const SizedBox(
+                                width: double.infinity,
+                                child: Center(
+                                  child: SectionCardWidget(
+                                    height: 200,
+                                    width: 200,
+                                    child: CircularProgressIndicator(
+                                      color: kBlueIconColor,
+                                      backgroundColor: kBackgroundScreenColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ),
                       SectionCardWidget(
                         color: const Color(0x33FFC700),

@@ -37,7 +37,7 @@ class BookingData {
   String room;
   String nutrition;
   int tour_price;
-  int fuel_price;
+  int fuel_charge;
   int service_charge;
 
   BookingData({
@@ -48,13 +48,13 @@ class BookingData {
     this.rating_name = 'Загрузка...',
     this.departure = 'Загрузка...',
     this.arrival_country = 'Загрузка...',
-    this.tour_date_start = 'Загрузка...',
-    this.tour_date_stop = 'Загрузка...',
+    this.tour_date_start = ' ',
+    this.tour_date_stop = ' ',
     this.number_of_nights = 0,
     this.room = 'Загрузка...',
     this.nutrition = 'Загрузка...',
     this.tour_price = 0,
-    this.fuel_price = 0,
+    this.fuel_charge = 0,
     this.service_charge = 0,
   });
 

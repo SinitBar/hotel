@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../constants.dart';
+import '../functions.dart';
 
 class PricingWidget extends StatelessWidget {
   const PricingWidget({
@@ -19,7 +19,7 @@ class PricingWidget extends StatelessWidget {
       textBaseline: TextBaseline.alphabetic,
       children: [
         Text(
-          'от $minimalPrice ₽',
+          'от ${fFormatMoneyString('$minimalPrice')}',
           style: kTextStyleSemibold,
         ),
         Padding(

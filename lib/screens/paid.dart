@@ -15,7 +15,7 @@ class Paid extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Заказ оплачен',
           style: kTextStyleMedium,
         ),
@@ -24,13 +24,17 @@ class Paid extends StatelessWidget {
               Icons.arrow_back_ios_new_rounded,
             ),
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, Hotel.id, (route) => false);
+              Navigator.pop(context);
             }),
       ),
-      bottomNavigationBar: StackBottomButton(
-        label: 'Супер!',
-        navigateToId: Hotel.id,
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(15.0),
+        child: const StackBottomButton(
+          label: 'Супер!',
+          navigateToId: Hotel.id,
+          clearStack: true,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -41,16 +45,9 @@ class Paid extends StatelessWidget {
             Stack(
               alignment: AlignmentDirectional.center,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundColor: Color(0xFFF6F6F9),
                   radius: 47,
-                  // foregroundImage: Image.asset(
-                  //   'icons/party_popper.png',
-                  //   //width: 20,
-                  //   //height: 20,
-                  //   scale: 0.5,
-                  //   fit: BoxFit.cover,
-                  // ).image,
                 ),
                 Positioned(
                   child: Image.asset(

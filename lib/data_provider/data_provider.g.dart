@@ -14,13 +14,13 @@ BookingData _$BookingDataFromJson(Map<String, dynamic> json) => BookingData(
       rating_name: json['rating_name'] as String? ?? 'Загрузка...',
       departure: json['departure'] as String? ?? 'Загрузка...',
       arrival_country: json['arrival_country'] as String? ?? 'Загрузка...',
-      tour_date_start: json['tour_date_start'] as String? ?? 'Загрузка...',
-      tour_date_stop: json['tour_date_stop'] as String? ?? 'Загрузка...',
+      tour_date_start: json['tour_date_start'] as String? ?? ' ',
+      tour_date_stop: json['tour_date_stop'] as String? ?? ' ',
       number_of_nights: json['number_of_nights'] as int? ?? 0,
       room: json['room'] as String? ?? 'Загрузка...',
       nutrition: json['nutrition'] as String? ?? 'Загрузка...',
       tour_price: json['tour_price'] as int? ?? 0,
-      fuel_price: json['fuel_price'] as int? ?? 0,
+      fuel_charge: json['fuel_charge'] as int? ?? 0,
       service_charge: json['service_charge'] as int? ?? 0,
     );
 
@@ -39,7 +39,7 @@ Map<String, dynamic> _$BookingDataToJson(BookingData instance) =>
       'room': instance.room,
       'nutrition': instance.nutrition,
       'tour_price': instance.tour_price,
-      'fuel_price': instance.fuel_price,
+      'fuel_charge': instance.fuel_charge,
       'service_charge': instance.service_charge,
     };
 

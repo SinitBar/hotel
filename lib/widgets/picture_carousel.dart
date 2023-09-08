@@ -17,7 +17,6 @@ class PictureCarousel extends StatefulWidget {
 class _PictureCarouselState extends State<PictureCarousel>
     with SingleTickerProviderStateMixin {
   late final PageController _pageController;
-  int currentPageIndex = 0;
 
   @override
   void dispose() {
@@ -28,34 +27,22 @@ class _PictureCarouselState extends State<PictureCarousel>
   @override
   void initState() {
     _pageController = PageController();
-    _pageController.addListener(() {
-      setState(() {
-        currentPageIndex = 0;
-      });
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-      onPageChanged: (index) {
-        setState(() {
-          currentPageIndex = index;
-          print('page: $currentPageIndex');
-        });
-      },
       controller: _pageController,
       itemBuilder: (context, index) {
         return SectionCardWidget(
-          //width: 343,
-          //height: 257,
           backgroundImageURL: widget.imagesURLs[index %
               ((widget.imagesURLs.isNotEmpty) ? widget.imagesURLs.length : 1)],
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(flex: 2, child: Container()),
                 Expanded(
@@ -64,23 +51,25 @@ class _PictureCarouselState extends State<PictureCarousel>
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    //margin: EdgeInsets.all(4.0),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: PageViewDotIndicator(
                         size: const Size(7, 7),
                         unselectedSize: const Size(7, 7),
                         fadeEdges: false,
-                        currentItem: currentPageIndex,
+                        currentItem: index %
+                            ((widget.imagesURLs.isNotEmpty)
+                                ? widget.imagesURLs.length
+                                : 1),
                         count: widget.imagesURLs.length,
                         unselectedColor: const Color(0xFFD9D9D9),
                         selectedColor: Colors.black,
-                        duration: const Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 500),
                         boxShape: BoxShape.circle,
                         onItemClicked: (index) {
                           _pageController.animateToPage(
                             index,
-                            duration: const Duration(milliseconds: 200),
+                            duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut,
                           );
                         },

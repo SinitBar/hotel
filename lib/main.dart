@@ -4,7 +4,6 @@ import 'package:hotel/screens/booking.dart';
 import 'package:hotel/screens/hotel.dart';
 import 'package:hotel/screens/paid.dart';
 import 'package:hotel/screens/room.dart';
-
 import 'blocs/hotel_data/hotel_data_bloc.dart';
 
 void main() {
@@ -16,11 +15,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final _hotelDataBloc = BlocProvider.of<HotelDataBloc>(context)..add(HotelDataLoadEvent());
     return BlocProvider(
       lazy: false,
       create: (context) => HotelDataBloc()..add(HotelDataLoadEvent()),
-      //BlocProvider.of<HotelDataBloc>(context)..add(HotelDataLoadEvent()),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
